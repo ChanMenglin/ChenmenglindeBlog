@@ -301,7 +301,7 @@ const winston = require('winston')
 const expressWinston = require('express-winston')
 ```
 加入
-···
+```
 // 正常请求的日志
 app.use(expressWinston.logger({
   transports: [
@@ -328,7 +328,7 @@ app.use(expressWinston.errorLogger({
     })
   ]
 }))
-···
+```
 > 注意：记录正常请求日志的中间件要放到 routes(app) 之前，记录错误请求日志的中间件要放到 routes(app) 之后。
 
 # 6 其它
@@ -336,33 +336,33 @@ app.use(expressWinston.errorLogger({
 ## 6.1 .gitignore
 如果我们想把项目托管到 git 服务器上（如: GitHub），而不想把线上配置、本地调试的 logs 以及 node_modules 添加到 git 的版本控制中，这个时候就需要 .gitignore 文件了，git 会读取 .gitignore 并忽略这些文件。在 myblog 下新建 .gitignore 文件，添加如下配置：
 .gitignore
-···
+```
 config/*
 !config/default.*
 npm-debug.log
 node_modules
 coverage
-···
+```
 需要注意的是，通过设置：
-···
+```
 config/*
 !config/default.*
-···
+```
 这样只有 config/default.js 会加入 git 的版本控制，而 config 目录下的其他配置文件则会被忽略，因为把线上配置加入到 git 是一个不安全的行为，通常你需要本地或者线上环境手动创建 config/production.js，然后添加一些线上的配置（如：mongodb 配置）即可覆盖相应的 default 配置。
 然后在 public/img 目录下创建 .gitignore：
-···
+```
 # Ignore everything in this directory
 *
 # Except this file
 !.gitignore
-···
+```
 这样 git 会忽略 public/img 目录下所有上传的头像，而不忽略 public/img 目录。同理，在 logs 目录下创建 .gitignore 忽略日志文件：
-···
+```
 # Ignore everything in this directory
 *
 # Except this file
 !.gitignore
-···
+```
 
 ## 6.2 测试
 [mocha](https://www.npmjs.com/package/mocha) 和 [suptertest](https://www.npmjs.com/package/supertest) 是常用的测试组合，通常用来测试 restful 的 api 接口，这里我们也可以用来测试我们的博客应用。 在 根目录 下新建 test 文件夹存放测试文件，以注册为例讲解 mocha 和 supertest 的用法。首先安装所需模块：
@@ -370,26 +370,26 @@ config/*
 npm i mocha supertest --save-dev
 ```
 修改 package.json，将：
-···
+```
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1"
 }
-···
+```
 修改为
-···
+```
 "scripts": {
   "test": "mocha test"
 }
-···
+```
 指定执行 test 目录的测试。修改 index.js，将：
-···
+```
 // 监听端口，启动程序
 app.listen(config.port, function () {
   console.log(`${pkg.name} listening on port ${config.port}`)
 })
-···
+```
 修改为
-···
+```
 if (module.parent) {
   // 被 require，则导出 app
   module.exports = app
@@ -399,12 +399,12 @@ if (module.parent) {
     console.log(`${pkg.name} listening on port ${config.port}`)
   })
 }
-···
+```
 这样做可以实现：直接启动 index.js 则会监听端口启动程序，如果 index.js 被 require 了，则导出 app，通常用于测试。
 
 找一张图片用于测试上传头像，放到 test 目录下，如 avatar.png。新建 test/signup.js，详情请查看相关文件
 此时编辑器会报语法错误（如：describe 未定义等等），修改 .eslintrc.json 如下：
-···
+```
 {
   "extends": "standard",
   "globals": {
@@ -415,7 +415,7 @@ if (module.parent) {
     "it": true
   }
 }
-··
+```
 这样，eslint 会忽略 globals 中变量未定义的警告。运行 npm test 看看效果吧
 这样，eslint 会忽略 globals 中变量未定义的警告。运行 npm test 看看效果吧，其余的测试请读者自行完成。
 
@@ -438,8 +438,9 @@ npm i istanbul --save-dev
 "scripts": {
   "test": "istanbul cover _mocha"
 }
-> Windows 下需要改成 istanbul cover node_modules/mocha/bin/_mocha。
 ```
+> Windows 下需要改成 istanbul cover node_modules/mocha/bin/_mocha。
+
 即可将 istanbul 和 mocha 结合使用，运行 npm test 测试完成后
 打开 ./coverage/Icov-report/index.html 可查看覆盖结果
 红色的行表示测试没有覆盖到
