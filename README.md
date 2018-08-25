@@ -93,7 +93,7 @@ indent_style = tab
 config-lite 还支持冒泡查找配置，即从传入的路径开始，从该目录不断往上一级目录查找 config 目录，直到找到或者到达根目录为止。
 
 在根目录下创建config 目录，在该目录下新建 default.js，添加如下代码：
-```
+```js
 module.exports = {
   port: 3000,
   session: {
@@ -158,7 +158,7 @@ cookie 与 session 的区别
 > 参考：[https://www.zhihu.com/question/19786827]()
 
 我们通过引入 express-session 中间件实现对会话的支持：
-```
+```js
 app.use(session(options))
 ```
 session 中间件会在 req 上添加 session 对象，即 req.session 初始值为 {}，当我们登录后设置 req.session.user = 用户信息，返回浏览器的头信息中会带上 set-cookie 将 session id 写到浏览器 cookie 中，那么该用户下次请求时，通过带上来的 cookie 中的 session id 我们就可以查找到该用户，并将用户信息保存到 req.session.user。
@@ -178,7 +178,7 @@ express-session、connect-mongo 和 connect-flash 的区别与联系
 路由按```./routes/```设计
 
 ## 2.6 修改根目录下的index.js
-```
+```js
 const path = require('path')
 const express = require('express')
 const session = require('express-session')
@@ -223,7 +223,7 @@ app.listen(config.port, function () {
 ```
 > 注意：中间件的加载顺序很重要。如上面设置静态文件目录的中间件应该放到 routes(app) 之前加载，这样静态文件的请求就不会落到业务逻辑的路由里；flash 中间件应该放到 session 中间件之后加载，因为 flash 是基于 session 实现的。
 
-运行 supervisor index 启动博客，
+运行 ```supervisor index``` 启动博客，
 
 到此博客的基础框架搭建就完成了
 
@@ -262,7 +262,7 @@ express 中有两个对象可用于模板的渲染：```app.locals``` 和 ```res
 ### Mongoose:
 优点：
 1. 封装了数据库的操作，给人的感觉是同步的，其实内部是异步的。如 mongoose 与 MongoDB 建立连接：
-```
+```js
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/test')
 const BlogModel = mongoose.model('Blog', { title: String, content: String })
@@ -296,12 +296,12 @@ schema 功能较弱，缺少如 required、default 功能。
 我们使用 [winston](https://www.npmjs.com/package/winston) 和 [express-winston](https://www.npmjs.com/package/express-winston) 记录日志。
 
 新建 logs 目录存放日志文件，修改 index.js，下引入所需模块：
-```
+```js
 const winston = require('winston')
 const expressWinston = require('express-winston')
 ```
 加入
-```
+```js
 // 正常请求的日志
 app.use(expressWinston.logger({
   transports: [
@@ -370,26 +370,26 @@ config/*
 npm i mocha supertest --save-dev
 ```
 修改 package.json，将：
-```
+```json
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1"
 }
 ```
 修改为
-```
+```json
 "scripts": {
   "test": "mocha test"
 }
 ```
 指定执行 test 目录的测试。修改 index.js，将：
-```
+```js
 // 监听端口，启动程序
 app.listen(config.port, function () {
   console.log(`${pkg.name} listening on port ${config.port}`)
 })
 ```
 修改为
-```
+```js
 if (module.parent) {
   // 被 require，则导出 app
   module.exports = app
@@ -404,7 +404,7 @@ if (module.parent) {
 
 找一张图片用于测试上传头像，放到 test 目录下，如 avatar.png。新建 test/signup.js，详情请查看相关文件
 此时编辑器会报语法错误（如：describe 未定义等等），修改 .eslintrc.json 如下：
-```
+```json
 {
   "extends": "standard",
   "globals": {
@@ -428,13 +428,13 @@ if (module.parent) {
 npm i istanbul --save-dev
 ```
 配置 istanbul 很简单，将 package.json 中：
-```
+```json
 "scripts": {
   "test": "mocha test"
 }
 ```
 修改为：
-```
+```json
 "scripts": {
   "test": "istanbul cover _mocha"
 }
