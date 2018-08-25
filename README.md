@@ -416,8 +416,7 @@ if (module.parent) {
   }
 }
 ```
-这样，eslint 会忽略 globals 中变量未定义的警告。运行 npm test 看看效果吧
-这样，eslint 会忽略 globals 中变量未定义的警告。运行 npm test 看看效果吧，其余的测试请读者自行完成。
+这样，eslint 会忽略 globals 中变量未定义的警告。运行 ```npm test``` 看看效果吧，其余的测试请读者自行完成。
 
 ### 测试覆盖率
 我们写测试肯定想覆盖所有的情况（包括各种出错的情况及正确时的情况），但光靠想需要写哪些测试是不行的，总也会有疏漏，最简单的办法就是可以直观的看出测试是否覆盖了所有的代码，这就是测试覆盖率，即被测试覆盖到的代码行数占总代码行数的比例。
@@ -439,8 +438,8 @@ npm i istanbul --save-dev
   "test": "istanbul cover _mocha"
 }
 ```
-> Windows 下需要改成 istanbul cover node_modules/mocha/bin/_mocha。
+> Windows 下需要改成 ```istanbul cover node_modules/mocha/bin/_mocha```。
 
-即可将 istanbul 和 mocha 结合使用，运行 npm test 测试完成后
+即可将 istanbul 和 mocha 结合使用，运行 ```npm test``` 测试完成后
 打开 ./coverage/Icov-report/index.html 可查看覆盖结果
 红色的行表示测试没有覆盖到
