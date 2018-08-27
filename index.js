@@ -20,13 +20,6 @@ app.set('view engine', 'ejs')
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')))
 
-// 404 page
-app.use(function (req, res) {
-  if (!res.headersSent) {
-    res.status(404).render('404')
-  }
-})
-
 // session 中间件
 app.use(session({
   name: config.session.key, // 设置 cookie 中保存 session id 的字段名称

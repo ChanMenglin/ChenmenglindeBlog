@@ -10,7 +10,6 @@
 > 遵循了 MVC（模型(model)－视图(view)－控制器(controller/route)） 的开发模式。
 
 # 1 创建项目
-
 运行 ```npm init```
 
 运行以下命令安装所需模块
@@ -92,7 +91,7 @@ indent_style = tab
 
 config-lite 还支持冒泡查找配置，即从传入的路径开始，从该目录不断往上一级目录查找 config 目录，直到找到或者到达根目录为止。
 
-在根目录下创建config 目录，在该目录下新建 default.js，添加如下代码：
+在根目录下创建 config 目录，在该目录下新建 default.js，添加如下代码：
 ```js
 module.exports = {
   port: 3000,
